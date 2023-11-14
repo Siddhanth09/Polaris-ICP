@@ -69,11 +69,11 @@ async function generateRoot() {
   console.log(latestBlockNumber);
 
   const merkleTree = createMerkleTree(extraBlocks);
-  const root = merkleTree.root;
-
+  const root = merkleTree.getRoot().toString('hex')
+  const leaf = SHA256('a')
   console.log('Merkle Root:', root);
-  console.log('Number of leaves:', merkleTree.leaves);
-  console.log('Number of levels:', merkleTree.levels);
+  console.log('Number of leaves:', SHA256(merkleTree.leaves));
+
 
   // Perform other operations, such as sending the root hash to another service or contract.
 }
