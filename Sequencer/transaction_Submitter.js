@@ -8,19 +8,17 @@ const path = require('path');
 const homeDirectory = os.homedir();
 // Function to initialize identity from a private key
 const initIdentity = () => {
-  const homeDirectory = os.homedir();
-  const identityPath = path.join(homeDirectory, '.config', 'dfx', 'identity', 'sudeep', 'identity.pem');
-  // Use the resolved path to read the file
-  const buffer = readFileSync(identityPath);
-  const key = buffer.toString("utf-8");
-  const privateKey = createHash("sha256").update(key).digest("base64");
-
-  const secp = Secp256k1KeyIdentity.fromSecretKey(
-    Buffer.from(privateKey, "base64"),
-  );
-  return secp;
+  // const homeDirectory = os.homedir();
+  // const identityPath = path.join(homeDirectory, '.config', 'dfx', 'identity', 'sudeep', 'identity.pem');
+  // // Use the resolved path to read the file
+  // const buffer = readFileSync(identityPath);
+  // const key = buffer.toString("utf-8");
+  // const privateKey = createHash("sha256").update(key).digest("base64");
+  const seed = "fit aspect voice belt leave slim female mesh jealous weather push cost lucky latin valley chat someone whisper nasty soup march print goddess twist";
+   const identity =  Secp256k1KeyIdentity.fromSeedPhrase(seed);
+  return identity;
 };
-const identity = initIdentity();
+identity = initIdentity();
 const host = 'https://automatic-space-rotary-phone-9xgq5r477w6fpq9r-4943.app.github.dev/';
 const agent = new HttpAgent({
   identity,
@@ -41,4 +39,4 @@ async function callInsertRoot(rootindex, entry) {
 }
 
 // Export the function to be used in the main script
-
+module.exports = { callInsertRoot };
