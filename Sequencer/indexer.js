@@ -1,7 +1,7 @@
 const { JsonRpcProvider } = require('ethers');
-const merkle = require('merkle-tree-gen');
-const { MerkleTree } = require('merkletreejs')
-const SHA256 = require('crypto-js/sha256')
+const { MerkleTree } = require('merkletreejs');
+const SHA256 = require('crypto-js/sha256');
+
 const rpcUrl = 'https://automatic-space-rotary-phone-9xgq5r477w6fpq9r-8545.app.github.dev/';
 let latestBlockNumber = -1; // Start with -1 to ensure at least one block is fetched
 
@@ -10,7 +10,7 @@ const provider = new JsonRpcProvider(rpcUrl);
 async function getLatestBlockNumber() {
   try {
     const blockNumber = await provider.send('eth_blockNumber', []);
-    console.log(blockNumber);
+    console.log('newblocknumber',blockNumber);
     return Number(blockNumber); // Convert to hex string
   } catch (error) {
     console.error('Error getting latest block number:', error.message);
@@ -28,17 +28,26 @@ async function fetchExtraBlocks() {
   }
 
   const blocks = [];
-  // Only fetch the new blocks since the last check
-  for (let i = latestBlockNumber + 1; i <= latestBlockNumber+30; i++) {
+  const batchSize = 100;
+  const startBlock = latestBlockNumber + 1;
+  const endBlock = Math.min(startBlock + batchSize - 1, latestBlock);
+
+  // Only fetch blocks in batches of 100
+  for (let i = startBlock; i <= endBlock; i++) {
     try {
       // Convert block number to hex string with 0x prefix
       const blockNumberHex = `0x${i.toString(16)}`;
       const block = await provider.send('eth_getBlockByNumber', [blockNumberHex, true]); // Pass the block number as hex string
-      console.log(block.hash);
+      console.log('blockhashes',block.hash);
       blocks.push(block);
     } catch (error) {
       console.error('Error fetching block:', error.message);
     }
+  }
+
+  // Update the latestBlockNumber only if blocks are fetched
+  if (blocks.length > 0) {
+    latestBlockNumber = blocks[blocks.length - 1].number;
   }
 
   return blocks;
@@ -47,14 +56,14 @@ async function fetchExtraBlocks() {
 function createMerkleTree(data) {
   const leaves = data.map((block) => {
     if (block) {
-      return block.hash; // Assuming 'hash' is the property containing the hash of the block
+      return ('blockhash',block.hash);
     } else {
       console.error('Skipping invalid block:', block);
       return ''; // Return an empty string to avoid errors
     }
   });
 
-  const tree = new MerkleTree(leaves, SHA256)
+  const tree = new MerkleTree(leaves, SHA256);
   return tree;
 }
 
@@ -64,19 +73,19 @@ async function generateRoot() {
     return;
   }
 
-  // Update the latestBlockNumber
-  latestBlockNumber = extraBlocks[extraBlocks.length - 1].number;
-  console.log(latestBlockNumber);
+  console.log('Latest Block Number:', latestBlockNumber);
 
   const merkleTree = createMerkleTree(extraBlocks);
-  const root = merkleTree.getRoot().toString('hex')
-  const leaf = SHA256('a')
+  const leaves = merkleTree.getLeaves().map((leaf) => leaf.toString('hex'));
+  const proof = merkleTree.getProof(leaves[0]);
+  stringProof = JSON.stringify(proof);
+  const root = merkleTree.getRoot().toString('hex');
   console.log('Merkle Root:', root);
-  console.log('Number of leaves:', SHA256(merkleTree.leaves));
-
+  console.log('Merkle Leaves:', leaves);
+  console.log('Merkle Proof:', stringProof);
 
   // Perform other operations, such as sending the root hash to another service or contract.
 }
 
 // Fetch extra blocks and generate root every 10 seconds
-setInterval(generateRoot, 10000);
+setInterval(generateRoot, 100); // Change interval to 10 seconds
