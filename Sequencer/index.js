@@ -5,7 +5,7 @@ const SHA256 = require('crypto-js/sha256');
 const verifyProof = require('./verifier');
 const app = express();
 const port = 3000;
-
+const DfinityAgent = require('@dfinity/agent');
 app.use(bodyParser.json());
 
 app.post('/verify-proof', (req, res) => {
