@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@dfinity/agent": "^0.20.0",
+    "@dfinity/identity-secp256k1": "^0.20.0",
     "axios": "^1.6.1",
     "crypto-js": "^4.2.0",
     "ethers": "^6.8.1",

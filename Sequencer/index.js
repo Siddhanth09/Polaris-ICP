@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { MerkleTree } = require('merkletreejs');
 const SHA256 = require('crypto-js/sha256');
+import { Secp256k1KeyIdentity } from '@dfinity/identity-secp256k1';
 const verifyProof = require('./verifier');
 const app = express();
 const port = 3000;
