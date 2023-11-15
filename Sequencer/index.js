@@ -1,10 +1,26 @@
-// app.js
 const express = require('express');
+const bodyParser = require('body-parser');
+const { MerkleTree } = require('merkletreejs');
+const SHA256 = require('crypto-js/sha256');
+const verifyProof = require('./verifier');
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express!');
+app.use(bodyParser.json());
+
+app.post('/verify-proof', (req, res) => {
+  try {
+    const { proof, leaf, root } = req.body;
+
+    // Verify the proof
+    const isValid = verifyProof(proof, leaf, root);
+
+    // Respond with the verification result
+    res.json({ isValid });
+  } catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.listen(port, () => {
