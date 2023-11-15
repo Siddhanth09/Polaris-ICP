@@ -1,6 +1,7 @@
 const { JsonRpcProvider } = require('ethers');
 const { MerkleTree } = require('merkletreejs');
 const SHA256 = require('crypto-js/sha256');
+const {callInsertRoot}=require('./transaction_Submitter');
 
 const rpcUrl = 'https://automatic-space-rotary-phone-9xgq5r477w6fpq9r-8545.app.github.dev/';
 let latestBlockNumber = -1; // Start with -1 to ensure at least one block is fetched
@@ -80,6 +81,8 @@ async function generateRoot() {
   const proof = merkleTree.getProof(leaves[0]);
   stringProof = JSON.stringify(proof);
   const root = merkleTree.getRoot().toString('hex');
+  const result = await callInsertRoot(latestBlockNumber, root);
+  console.log('Result:', result);
   console.log('Merkle Root:', root);
   console.log('Merkle Leaves:', leaves);
   console.log('Merkle Proof:', stringProof);

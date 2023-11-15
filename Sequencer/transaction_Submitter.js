@@ -3,9 +3,15 @@ const { readFileSync } = require('fs');
 const { createHash } = require('crypto');
 const { Secp256k1KeyIdentity } = require('@dfinity/identity-secp256k1');
 const { HttpAgent } = require('@dfinity/agent');
+const os = require('os');
+const path = require('path');
+const homeDirectory = os.homedir();
 // Function to initialize identity from a private key
 const initIdentity = () => {
-  const buffer = readFileSync(process.env.PATH_TO_PRIVATE_KEY);
+  const homeDirectory = os.homedir();
+  const identityPath = path.join(homeDirectory, '.config', 'dfx', 'identity', 'sudeep', 'identity.pem');
+  // Use the resolved path to read the file
+  const buffer = readFileSync(identityPath);
   const key = buffer.toString("utf-8");
   const privateKey = createHash("sha256").update(key).digest("base64");
 
@@ -15,7 +21,7 @@ const initIdentity = () => {
   return secp;
 };
 const identity = initIdentity();
-const host = 'https://ic0.app';
+const host = 'https://automatic-space-rotary-phone-9xgq5r477w6fpq9r-4943.app.github.dev/';
 const agent = new HttpAgent({
   identity,
   // fetch and host need to be defined or imported appropriately
