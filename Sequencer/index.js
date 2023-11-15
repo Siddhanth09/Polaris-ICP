@@ -7,7 +7,6 @@ const app = express();
 const port = 3000;
 const DfinityAgent = require('@dfinity/agent');
 app.use(bodyParser.json());
-
 app.post('/verify-proof', (req, res) => {
   try {
     const { proof, leaf, root } = req.body;
