@@ -14,7 +14,6 @@ app.post('/verify-proof', (req, res) => {
 
     // Verify the proof
     const isValid = verifyProof(proof, leaf, root);
-
     // Respond with the verification result
     res.json({ isValid });
   } catch (error) {
