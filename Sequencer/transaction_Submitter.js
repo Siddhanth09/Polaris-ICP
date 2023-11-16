@@ -12,7 +12,7 @@ const path = require('path');
 // Function to initialize identity from a private key
 const initIdentity = () => {
   // Use the seed phrase to initialize the identity
-  const seed = "fit aspect voice belt leave slim female mesh jealous weather push cost lucky latin valley chat someone whisper nasty soup march print goddess twist";
+  const seed = "test test test";
   const identity = Secp256k1KeyIdentity.fromSeedPhrase(seed);
   return identity;
 };
