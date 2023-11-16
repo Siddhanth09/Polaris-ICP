@@ -1,24 +1,23 @@
-
 const { readFileSync } = require('fs');
 const { createHash } = require('crypto');
+const { id } = require('@dfinity/identity');
 const { Secp256k1KeyIdentity } = require('@dfinity/identity-secp256k1');
+
 const { HttpAgent } = require('@dfinity/agent');
+const { Principal } = require('@dfinity/principal'); // Add this import
 const os = require('os');
+
 const path = require('path');
-const homeDirectory = os.homedir();
+
 // Function to initialize identity from a private key
 const initIdentity = () => {
-  // const homeDirectory = os.homedir();
-  // const identityPath = path.join(homeDirectory, '.config', 'dfx', 'identity', 'sudeep', 'identity.pem');
-  // // Use the resolved path to read the file
-  // const buffer = readFileSync(identityPath);
-  // const key = buffer.toString("utf-8");
-  // const privateKey = createHash("sha256").update(key).digest("base64");
+  // Use the seed phrase to initialize the identity
   const seed = "fit aspect voice belt leave slim female mesh jealous weather push cost lucky latin valley chat someone whisper nasty soup march print goddess twist";
-   const identity =  Secp256k1KeyIdentity.fromSeedPhrase(seed);
+  const identity = Secp256k1KeyIdentity.fromSeedPhrase(seed);
   return identity;
 };
-identity = initIdentity();
+
+const identity = initIdentity();
 const host = 'https://automatic-space-rotary-phone-9xgq5r477w6fpq9r-4943.app.github.dev/';
 const agent = new HttpAgent({
   identity,
@@ -33,8 +32,8 @@ const canisterId = 'bd3sg-teaaa-aaaaa-qaaba-cai';
 // Example function to call the 'insertRoot' method on the canister
 async function callInsertRoot(rootindex, entry) {
   const methodName = 'insertRoot';
-
-  const result = await agent.call(canisterId, methodName, { rootindex, entry });
+  const sender = identity.getPublicKey;
+  const result = await agent.call(canisterId, methodName, { rootindex, entry }, { sender: sender });
   return result;
 }
 

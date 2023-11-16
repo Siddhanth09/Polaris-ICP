@@ -81,8 +81,7 @@ async function generateRoot() {
   const proof = merkleTree.getProof(leaves[0]);
   stringProof = JSON.stringify(proof);
   const root = merkleTree.getRoot().toString('hex');
-  const result = await callInsertRoot(latestBlockNumber, root);
-  console.log('Result:', result);
+ const result = await callInsertRoot(latestBlockNumber, root);
   console.log('Merkle Root:', root);
   console.log('Merkle Leaves:', leaves);
   console.log('Merkle Proof:', stringProof);
