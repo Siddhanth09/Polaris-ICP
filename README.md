@@ -35,6 +35,10 @@ const seed = "test test test test";
 - This will start indexing the blocks being mined on polaris and commits it to your StateRoot contract.
 - You can query the merkelRoot of a block by taking the block number and querying the contract through `lookupCommit` in dfx or candid UI
 - You can also call the verify_tree with the rootHash the leaf blockhash and the proof to verify the validity of block
+![WhatsApp Image 2023-11-16 at 6 30 18 PM](https://github.com/muskbuster/Celestia-ICP/assets/81789395/d9c9d323-1ffb-4b6e-93da-670ba3814609)
+
+
+![image](https://github.com/muskbuster/Celestia-ICP/assets/81789395/ba83312e-412d-4d61-b1cc-c29174d039b2)
 
 ## Further developments
 - Implementation of a more robust sequencer with proper MPC signing for additional security
