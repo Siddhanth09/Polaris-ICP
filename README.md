@@ -10,7 +10,8 @@ I have made a very simple implementation of a sequencer using Polaris and commit
 
 Here the transactions are packed into blocks and the sequencer Signs the root of the merkel tree formed with these Blocks as roots and is committed to the Canister on ICP.
 The canister has a proof validation function aswell which accepts block hash , Merkel root and proof and verifies the validity of the merkel tree.
-
+## Mainet canister id
+`cdytg-5iaaa-aaaag-acaya-cai`
 ## Implementation and usage
 
 - First clone the polaris repository using  Clone [`polaris`](https://github.com/berachain/polaris) to act as our EVM smartContract layer (Ran locally).
