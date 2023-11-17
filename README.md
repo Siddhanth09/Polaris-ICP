@@ -40,6 +40,9 @@ const seed = "test test test test";
 
 ![image](https://github.com/muskbuster/Celestia-ICP/assets/81789395/ba83312e-412d-4d61-b1cc-c29174d039b2)
 
+## Video 
+
+https://www.loom.com/share/3ad81484691c4775823d8b7c7ccd9b70
 ## Further developments
 - Implementation of a more robust sequencer with proper MPC signing for additional security
 - Adding a DA layer to the rollup
