@@ -39,6 +39,12 @@ const seed = "test test test test";
 
 
 ![image](https://github.com/muskbuster/Celestia-ICP/assets/81789395/ba83312e-412d-4d61-b1cc-c29174d039b2)
+## Tech stack
+- Polaris
+- Motoko
+- Express
+- ICP
+- dfx
 
 ## Video 
 
